@@ -52,7 +52,7 @@ def demo_verificar_estructura() -> None:
     consultas = json.loads((DATA_DIR / "consultas_ejemplo.json").read_text(encoding="utf-8"))
     print(f"  FAQ cargado: {len(faq)} entradas")
     print(f"  Consultas ejemplo: {len(consultas)} registros")
-    print("  Estructura OK.\n")
+    print("  Estructura OK. Completa los TODO del proyecto.\n")
 
 
 def demo_clasificar_consultas() -> None:
@@ -68,7 +68,6 @@ def demo_clasificar_consultas() -> None:
 
 
 def demo_chat_con_contexto() -> None:
-    from context import cargar_faq, seleccionar_faq
     from logic import demo_seleccion_faq, responder_chat
     from state import inicializar_estado
 
@@ -89,6 +88,7 @@ def demo_chat_con_contexto() -> None:
         }
     )
     faq_path = DATA_DIR / "faq.json"
+    from context import cargar_faq, seleccionar_faq
 
     turnos = [
         "Me llamo Ana y estudio el Sprint 5 del bootcamp.",

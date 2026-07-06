@@ -47,7 +47,7 @@ python main.py
 
 `main.py` ya imprime los resultados por ti con `imprimir_resultado()`.
 
-### Helpers que ya existen
+### Helpers que ya existen (no los reescribas)
 
 En `logic.py` ya están hechas `respuesta_ok()` y `respuesta_error()`. Úsalas así:
 

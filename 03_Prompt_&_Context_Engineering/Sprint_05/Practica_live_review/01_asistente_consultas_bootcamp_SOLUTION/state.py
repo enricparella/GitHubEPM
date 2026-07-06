@@ -25,52 +25,44 @@ def inicializar_estado(user_profile: dict | None = None) -> dict:
 
 
 def append_user(state: dict, texto: str) -> None:
-    """Añade mensaje del alumno al historial.
+    """TODO: contexto y chat — añade mensaje del alumno al historial.
 
     Entrada: state de inicializar_estado, texto = pregunta del usuario.
     Efecto: state["messages"].append({"role": "user", "text": texto.strip()})
 
     Ver README FASE 2, Tarea 3.
     """
-    state["messages"].append({"role": "user", "text": texto.strip()})
+    raise NotImplementedError("Implementa append_user()")
 
 
 def append_model(state: dict, texto: str) -> None:
-    """Añade respuesta del modelo al historial.
+    """TODO: contexto y chat — añade respuesta del modelo al historial.
 
     Entrada: state, texto = respuesta de Gemini.
     Efecto: state["messages"].append({"role": "model", "text": texto.strip()})
 
     Ver README FASE 2, Tarea 3.
     """
-    state["messages"].append({"role": "model", "text": texto.strip()})
+    raise NotImplementedError("Implementa append_model()")
 
 
 def ultimos_n(state: dict, n: int) -> list[dict]:
-    """Devuelve los últimos n mensajes del chat.
+    """TODO: contexto y chat — devuelve los últimos n mensajes del chat.
 
     Entrada: state, n = WINDOW (desde config.py, suele ser 6).
     Salida: lista de {"role": "user"|"model", "text": "..."}; [] si n <= 0.
 
     Ver README FASE 2, Tarea 3.
     """
-    msgs = state.get("messages", [])
-    return msgs[-n:] if n > 0 else []
+    raise NotImplementedError("Implementa ultimos_n()")
 
 
 def guardar_clasificacion(state: dict, consulta: dict, clasificacion: dict) -> None:
-    """Guarda clasificación en el state (opcional / experimentos).
+    """TODO: contexto y chat (opcional) — guarda clasificación en el state.
 
     Entrada: consulta original + dict category/priority/summary.
     Efecto: añade un registro a state["consultas_clasificadas"].
 
     Ver README experimentos opcionales.
     """
-    state.setdefault("consultas_clasificadas", []).append(
-        {
-            "nombre": consulta.get("nombre"),
-            "email": consulta.get("email"),
-            "mensaje": consulta.get("mensaje"),
-            "clasificacion": clasificacion,
-        }
-    )
+    raise NotImplementedError("Implementa guardar_clasificacion()")

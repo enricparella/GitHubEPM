@@ -17,23 +17,20 @@ Funciones a implementar:
   - Fase 1: `parsear_clasificacion`, `clasificar_consulta`
   - Fase 2: `demo_seleccion_faq`, `responder_chat`
 """
-
 import json
+
 from pathlib import Path
+
+from validators import validar_consulta
 
 from config import (
     CATEGORIAS,
-    MSG_CHAT_OK,
     MSG_CLASIFICACION_OK,
     MSG_ERROR_VALIDACION,
     PRIORIDADES,
-    WINDOW,
 )
-from context import cargar_faq, seleccionar_faq
-from prompts import build_chat_prompt, build_clasificacion_prompt
-from state import append_model, append_user, guardar_clasificacion, ultimos_n
-from validators import validar_consulta
 
+from prompts import build_clasificacion_prompt
 
 def respuesta_ok(mensaje: str, data: dict | None = None) -> dict:
     return {"status": "ok", "mensaje": mensaje, "data": data or {}}
@@ -44,7 +41,7 @@ def respuesta_error(mensaje: str, errores: list[str]) -> dict:
 
 
 def parsear_clasificacion(raw: str) -> dict:
-    """Convierte la respuesta del modelo en dict validado (whitelist).
+    """TODO: clasificación — json.loads + whitelist de category y priority.
 
     Entrada: '{"category": "tecnico", "priority": "media", "summary": "..."}'
     Salida: dict con esas tres claves validadas.
@@ -71,9 +68,11 @@ def parsear_clasificacion(raw: str) -> dict:
 
     return obj
 
+    # raise NotImplementedError("Implementa parsear_clasificacion()")
+
 
 def clasificar_consulta(datos: dict) -> dict:
-    """Orquesta validar → prompt → Gemini → parsear (fase 1).
+    """TODO: clasificación — orquesta validar → prompt → Gemini → parsear.
 
     Entrada: dict como en consultas_ejemplo.json.
     Salida OK: {"status": "ok", "mensaje": "...", "data": {category, priority, summary}}
@@ -98,82 +97,31 @@ def clasificar_consulta(datos: dict) -> dict:
         return respuesta_error("Salida del modelo inválida", [str(e)])
     except Exception as e:
         return respuesta_error("Error al llamar al modelo", [str(e)])
-
-
-def clasificar_y_guardar(datos: dict, state: dict) -> dict:
-    r = clasificar_consulta(datos)
-    if r.get("status") == "ok":
-        guardar_clasificacion(state, datos, r["data"])
-    return r
-
+    
+    # raise NotImplementedError("Implementa clasificar_consulta()")
 
 def responder_chat(
     state: dict,
     pregunta: str,
     faq_entries: list[dict],
 ) -> dict:
-    """Chat con perfil, FAQ filtrado e historial (fase 2).
+    """TODO: contexto y chat — prompt con perfil, FAQ filtrado e historial.
 
     Entrada: state (inicializar_estado), pregunta del alumno, faq_entries de seleccionar_faq.
     Salida OK: respuesta del modelo + metricas (elapsed_ms, tokens).
     Actualiza state con append_user/append_model tras respuesta OK.
 
-    Ver README FASE 2, Tarea 4 (incluye pseudocódigo).
+    Ver README FASE 2, Tarea 4.
     """
-    if not pregunta.strip():
-        return respuesta_error("Pregunta vacía", ["La pregunta no puede estar vacía."])
-
-    profile = state.get("user_profile", {})
-    prompt = build_chat_prompt(
-        pregunta=pregunta,
-        profile=profile,
-        faq_entries=faq_entries,
-        recent_messages=ultimos_n(state, WINDOW),
-    )
-
-    try:
-        from gemini_client import safe_generate_texto
-
-        texto, metricas = safe_generate_texto(prompt)
-    except ValueError as e:
-        return respuesta_error("Contexto demasiado grande", [str(e)])
-    except Exception as e:
-        return respuesta_error("Error al llamar al modelo", [str(e)])
-
-    append_user(state, pregunta)
-    append_model(state, texto)
-
-    return respuesta_ok(
-        MSG_CHAT_OK,
-        {
-            "respuesta": texto,
-            "metricas": {
-                "elapsed_ms": metricas.elapsed_ms,
-                "prompt_tokens": metricas.prompt_tokens,
-                "output_tokens": metricas.output_tokens,
-                "total_tokens": metricas.total_tokens,
-            },
-        },
-    )
+    raise NotImplementedError("Implementa responder_chat()")
 
 
 def demo_seleccion_faq(faq_path: Path, consulta: str) -> dict:
-    """Prueba seleccionar_faq sin chat completo.
+    """TODO: contexto y chat — prueba seleccionar_faq sin chat completo.
 
     Entrada: ruta a faq.json y texto de consulta.
     Salida OK: {"status": "ok", "data": {"topic_id": "...", "entry": {...}}}
 
     Ver README FASE 2, Tarea 4.
     """
-    faq = cargar_faq(faq_path)
-    seleccion = seleccionar_faq(faq, consulta, max_entradas=1)
-    if not seleccion:
-        return respuesta_error(
-            "FAQ sin coincidencias",
-            ["Ninguna entrada del FAQ coincide con la consulta."],
-        )
-    entry = seleccion[0]
-    return respuesta_ok(
-        "Entrada FAQ seleccionada",
-        {"topic_id": entry.get("topic_id"), "entry": entry},
-    )
+    raise NotImplementedError("Implementa demo_seleccion_faq()")
