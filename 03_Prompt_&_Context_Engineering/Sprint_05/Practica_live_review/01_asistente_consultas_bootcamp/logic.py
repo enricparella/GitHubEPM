@@ -22,6 +22,10 @@ from pathlib import Path
 
 from validators import validar_consulta
 
+import config
+
+from prompts import build_clasificacion_prompt
+
 
 def respuesta_ok(mensaje: str, data: dict | None = None) -> dict:
     return {"status": "ok", "mensaje": mensaje, "data": data or {}}

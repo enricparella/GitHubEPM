@@ -20,15 +20,25 @@ from config import (
 
 
 def validar_consulta(datos: dict) -> list[str]:
-    """TODO: clasificación — valida nombre, email y mensaje antes de llamar a Gemini.
+    errores = []
 
-    Entrada: {"nombre": "Ana", "email": "ana@ejemplo.com", "mensaje": "..."}
-    Salida OK: []
-    Salida error: ["Nombre inválido: ...", "Email inválido: ...", ...]
+    if not isinstance(datos, dict):
+      errores.append("La consulta debe tener un formato dict.")
 
-    Ver README FASE 1, Tarea 1 y config.py (MIN/MAX_CHARS, PATRON_EMAIL).
-    """
-    # TODO: clasificación — implementar validación
-    raise NotImplementedError(
-        "Completa validar_consulta() — revisa config.py y data/consultas_ejemplo.json"
-    )
+    nombre = str(datos.get("nombre", "")).strip()
+    if not nombre:
+      errores.append("Nombre inválido: ...")
+
+    email = str(datos.get("email", "")).strip()
+    if not email:
+      errores.append("Email inválido: ...")
+    elif PATRON_EMAIL.fullmatch(email) is None:
+      errores.append("Email inválido: formato incorrecto.")
+
+    mensaje = str(datos.get("mensaje", "")).strip()
+    if len(mensaje) < MIN_CHARS_MENSAJE:
+      errores.append(f"Mensaje demasiado corto ...")
+    elif len(mensaje) > MAX_CHARS_MENSAJE:
+      errores.append(f"Mensaje demasiado largo ...")
+
+    return errores

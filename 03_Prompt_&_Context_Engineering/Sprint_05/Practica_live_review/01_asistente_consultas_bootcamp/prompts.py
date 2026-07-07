@@ -47,13 +47,8 @@ Pregunta actual del alumno:
 
 
 def build_clasificacion_prompt(mensaje: str) -> str:
-    """TODO: clasificación — ensambla ROLE + TASK + mensaje (sin llamar a la API).
-
-  Entrada: mensaje = "Mi GEMINI_API_KEY no funciona, ¿qué reviso?"
-  Salida: str con ROLE_CLASIFICADOR, TASK_CLASIFICAR y el mensaje del alumno.
-  Ver README FASE 1, Tarea 2.
-    """
-    raise NotImplementedError("Implementa build_clasificacion_prompt()")
+    
+    return f"{ROLE_CLASIFICADOR}\n\n{TASK_CLASIFICAR}\n\nMensaje:\n{mensaje.strip()}"
 
 
 def build_perfil_block(profile: dict) -> str:
