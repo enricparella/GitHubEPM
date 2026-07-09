@@ -1,4 +1,4 @@
-![Cabecera](../assets/cabecera_thebridge.png)
+![Cabecera](assets/cabecera_thebridge.png)
 
 # Team Challenge · Sprint 05–07 — Employee Onboarding Assistant
 
