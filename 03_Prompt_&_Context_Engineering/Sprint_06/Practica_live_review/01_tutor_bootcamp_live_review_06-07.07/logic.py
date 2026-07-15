@@ -134,7 +134,16 @@ def parsear_respuesta_tutor(raw: str) -> dict:
 
     Ver README Fase 2, Tarea 5.
     """
-    raise NotImplementedError("Implementa parsear_respuesta_tutor()")
+    try:
+        obj = json.loads(raw)
+    except json.JSONDecodeError as e:
+        raise ValueError(f"JSON inválido del modelo: {raw!r}") from e
+    for key in ("in_scope", "category", "answer"):
+        if key not in obj:
+            raise ValueError(f"Falta clave obligatoria en JSON: {key}")
+    return obj
+
+    # raise NotImplementedError("Implementa parsear_respuesta_tutor()")
 
 
 def procesar_turno_vulnerable(user_message: str) -> dict:
@@ -142,7 +151,25 @@ def procesar_turno_vulnerable(user_message: str) -> dict:
 
     Ver README Fase 2, Tarea 6.
     """
-    raise NotImplementedError("Implementa procesar_turno_vulnerable()")
+    if not user_message.strip():
+        return respuesta_error("Mensaje vacío", ["El mensaje no puede estar vacío."])
+
+    prompt = build_vulnerable_prompt(user_message)
+    try:
+        texto, metricas = safe_generate(prompt, temperature=TEMPERATURE_VULNERABLE)
+    except ValueError as e:
+        return respuesta_error("Error de contexto", [str(e)])
+
+    return respuesta_ok(
+        "Turno vulnerable completado",
+        {
+            "modo": "vulnerable",
+            "respuesta": texto,
+            "metricas": _metricas_a_dict(metricas),
+        },
+    )
+
+    # raise NotImplementedError("Implementa procesar_turno_vulnerable()")
 
 
 def procesar_turno_seguro(user_message: str) -> dict:
@@ -150,4 +177,40 @@ def procesar_turno_seguro(user_message: str) -> dict:
 
     Ver README Fase 2, Tarea 7 (incluye pseudocódigo).
     """
-    raise NotImplementedError("Implementa procesar_turno_seguro()")
+    errores = validate_input(user_message)
+    if errores:
+        return respuesta_error("Input rechazado", errores)
+
+    if not parece_dominio_python(user_message):
+        return respuesta_ok(
+            "Fuera de dominio (sin llamar al modelo)",
+            {
+                "modo": "seguro",
+                "respuesta": rechazo_fuera_de_dominio(),
+                "json": {
+                    "in_scope": False,
+                    "category": "out_of_scope",
+                    "answer": rechazo_fuera_de_dominio(),
+                },
+                "metricas": None,
+            },
+        )
+
+    prompt = build_secure_prompt(user_message)
+    try:
+        raw, metricas = safe_generate(prompt, temperature=TEMPERATURE, json_mode=True)
+        obj = parsear_respuesta_tutor(raw)
+    except ValueError as e:
+        return respuesta_error("Error al procesar respuesta", [str(e)])
+
+    return respuesta_ok(
+        "Turno seguro completado",
+        {
+            "modo": "seguro",
+            "respuesta": obj.get("answer", ""),
+            "json": obj,
+            "metricas": _metricas_a_dict(metricas),
+        },
+    )
+
+    # raise NotImplementedError("Implementa procesar_turno_seguro()")
