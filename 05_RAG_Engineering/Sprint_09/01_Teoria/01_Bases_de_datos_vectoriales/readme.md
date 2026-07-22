@@ -45,15 +45,13 @@ Salida de este bloque: una **colección ChromaDB** indexada con el corpus de la 
 
 🔗 [Abrir](./03_flujo_de_indexacion.md)
 
-* De `embeddings.json` a `collection.add()`
-* IDs, batches e idempotencia
+* De embeddings calculados a `collection.add()`
+* IDs, batches, reindexación e idempotencia
 
 ---
 
-## Workout (vídeo guiado)
+## Workout
 
 | Recurso | Cubre |
 |---------|--------|
 | [01_crear_base_vectorial_chromadb.ipynb](../../02_Workout/01_Bases_de_datos_vectoriales/01_crear_base_vectorial_chromadb.ipynb) | ChromaDB + indexación |
-
-El **proyecto modular** completo está en el [Bloque 3 — Evaluación del retrieval](../03_Evaluacion_del_retrieval/readme.md).

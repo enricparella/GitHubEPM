@@ -2,11 +2,13 @@
 
 # Introducción: bases de datos vectoriales
 
-En el Sprint 8 terminaste con `output/embeddings.json`: cada chunk del corpus tiene un **vector numérico** y metadatos. Ese archivo es viene bienpara hacer inspección y depuración, pero **no es un motor de búsqueda** todavía.
+En el Sprint 8 terminaste con `output/embeddings.json`: cada chunk del corpus tiene un **vector numérico** y metadatos. Ese archivo viene bien para hacer inspección y depuración, pero **no es un motor de búsqueda**.
 
 En este bloque das el siguiente paso: **indexar** esos vectores en **ChromaDB**, una base de datos vectorial persistente.
 
 > **Base de datos vectorial** = almacén optimizado para guardar embeddings y encontrar los más cercanos a una consulta.
+
+![bbdd_vectoriales](../../assets/bbdd_vectoriales.png)
 
 ---
 
@@ -54,13 +56,9 @@ Si ejecutaste el proyecto de S8 con `MAX_CHUNKS_EMBED = 5`, tu índice tendrá 5
 
 ## Salida concreta
 
-Carpeta `output/chroma_db/` con una colección (p. ej. `agenda_cultural_madrid`) que contiene:
+Carpeta `output/chroma_db/` con una colección (p. ej. `agenda_cultural_madrid` o `calidad_aire_madrid` que son los que veremos en los proyectos) que contiene:
 
 - **ids** — identificador único por chunk
 - **embeddings** — vectores de 3072 dimensiones (con `gemini-embedding-2`)
 - **documents** — texto del chunk
 - **metadatas** — `source`, `chunk_index`, `distrito`, etc.
-
----
-
-**Workout:** [01_crear_base_vectorial_chromadb.ipynb](../../02_Workout/01_Bases_de_datos_vectoriales/01_crear_base_vectorial_chromadb.ipynb)

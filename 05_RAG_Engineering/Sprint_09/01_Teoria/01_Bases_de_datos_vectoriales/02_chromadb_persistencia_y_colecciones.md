@@ -10,13 +10,17 @@
 
 ---
 
-## 1) Por qué ChromaDB en este bootcamp
+## 1) Por qué ChromaDB
+
+![chroma_db](../../assets/chromaDB.webp)
 
 ChromaDB es una base vectorial **ligera** y **local**: no necesitas servidor ni cuenta en la nube para practicar. Encaja con el enfoque modular del curso: ves exactamente qué entra en `collection.add()` y qué sale de `collection.query()`.
 
 En producción podrías usar Pinecone, Weaviate o pgvector; el **patrón** (indexar → consultar) es el mismo.
 
-> **Nota sobre LangChain:** existe `langchain_chroma.Chroma` como wrapper. En este sprint usamos la **API directa** de `chromadb` para no ocultar el flujo. En teoría del Bloque 2 verás cuándo un wrapper puede simplificar el código.
+> **Nota sobre LangChain:** existe `langchain_chroma.Chroma` como wrapper. En este sprint usamos la **API directa** de `chromadb` para no ocultar el flujo. En teoría del Bloque 2 verás cuándo un wrapper puede simplificar el código. 
+
+![chromadb_langchain](../../assets/chromaDB_langchain.png)
 
 ---
 
@@ -107,7 +111,29 @@ output/chroma_db/
   └── ... (segmentos del índice HNSW)
 ```
 
-No edites estos archivos a mano. Para **reindexar** desde cero, borra `chroma_db/` o usa `client.delete_collection()` y vuelve a ejecutar `index.py`.
+No edites estos archivos a mano. Para **reindexar** desde cero, borra `chroma_db/` o usa `client.delete_collection()` y vuelve a ejecutar el script de indexación.
+
+---
+
+## Referencias
+
+### ChromaDB
+
+- [Documentación Chroma (inicio)](https://docs.trychroma.com/docs/overview/introduction) — visión general del producto y conceptos
+- [Clients (`PersistentClient`, etc.)](https://docs.trychroma.com/docs/run-chroma/clients) — cliente local persistente (lo que usamos en el curso)
+- [Gestionar colecciones](https://docs.trychroma.com/docs/collections/manage-collections) — `create` / `get` / `get_or_create` / `delete`
+- [Añadir datos (`add`)](https://docs.trychroma.com/docs/collections/add-data) — `ids`, `embeddings`, `documents`, `metadatas`
+- [Consultar (`query`)](https://docs.trychroma.com/docs/querying-collections/query-and-get) — similarity search (lo verás en el Bloque 2)
+- [Cookbook — clients](https://cookbook.chromadb.dev/core/clients/) — ejemplos prácticos de clientes Python
+- [Repo `chroma-core/chroma`](https://github.com/chroma-core/chroma) — código fuente e issues
+- [PyPI `chromadb`](https://pypi.org/project/chromadb/) — versiones del paquete `pip install chromadb`
+
+### LangChain + Chroma (referencia / alternativa)
+
+- [Integración Chroma (Python)](https://docs.langchain.com/oss/python/integrations/vectorstores/chroma) — wrapper `langchain_chroma.Chroma` (persistencia, query, retriever)
+- [Provider Chroma en LangChain](https://docs.langchain.com/oss/python/integrations/providers/chroma) — instalación `langchain-chroma` y overview
+- [Vector stores en LangChain](https://docs.langchain.com/oss/python/integrations/vectorstores) — contexto: Chroma como una integración más entre muchas
+- [PyPI `langchain-chroma`](https://pypi.org/project/langchain-chroma/) — paquete del wrapper (si lo pruebas por tu cuenta)
 
 ---
 

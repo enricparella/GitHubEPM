@@ -6,6 +6,8 @@ El **retrieval** es la fase en la que el sistema **busca** en el índice vectori
 
 > **Retriever** = componente que transforma una pregunta en una lista ordenada de chunks candidatos.
 
+![retrieval](../../assets/rag2.avif)
+
 ---
 
 ## Objetivos del bloque
@@ -55,12 +57,3 @@ build_chat_prompt()        formatear_contexto()   ← S10: build_rag_prompt()
 ```
 
 La diferencia no es el LLM final (aún no lo usas): es **cómo eliges el contexto**. En el Sprint 5 el contexto se seleccionaba manualmente, mientras que en el Sprint 9 se selecciona automáticamente utilizando retrieval.
----
-
-## Tabla guía de lectura
-
-| # | Documento | Enfoque |
-|---|-----------|---------|
-| 1 | [Retrieval y similarity search](./01_retrieval_y_similarity_search.md) | Conceptos y top-K |
-| 2 | [Recuperación y contexto](./02_recuperacion_embeddings_y_contexto.md) | Embed consulta + formato |
-| 3 | [Configuración del retriever](./03_configuracion_del_retriever.md) | Parámetros y diseño modular |

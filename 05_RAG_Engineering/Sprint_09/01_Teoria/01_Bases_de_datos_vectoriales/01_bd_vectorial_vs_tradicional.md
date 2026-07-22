@@ -8,6 +8,8 @@
 - Entender por qué una BD relacional o un `LIKE '%cine%'` no sustituyen la búsqueda semántica.
 - Saber cuándo combinar ambos enfoques (vectores + metadatos).
 
+![bbdd_vectoriales3](../../assets/bbdd_vectoriales3.jpg)
+
 ---
 
 ## 1) Qué es una base de datos vectorial
@@ -29,6 +31,10 @@ Una BD vectorial almacena **vectores de alta dimensión** (embeddings) y permite
 La operación central es **similarity search** (búsqueda por similitud). ChromaDB, Pinecone, pgvector o FAISS resuelven este problema con estructuras optimizadas (p. ej. HNSW).
 
 En RAG, el vector store es la **memoria a largo plazo** del sistema: el LLM no «recuerda» tus PDFs; el índice vectorial sí.
+
+![bbdd_vectorial_Rag](../../assets/bbdd_vectorial_rag.png)
+![bbdd_vectoriales](../../assets/bbdd_vectoriales.png)
+![bbdd_vectoriales2](../../assets/bbdd_vectoriales2.png)
 
 ---
 

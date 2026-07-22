@@ -21,9 +21,14 @@ Salida: lista de chunks ordenados por relevancia estimada (proximidad vectorial)
 
 Sin un retriever fiable, el LLM o inventa (alucina) o responde con conocimiento genérico desactualizado.
 
+![retrieval](../../assets/rag4.avif)
+![retrieval2](../../assets/retrieval.png)
+
 ---
 
 ## 2) Similarity search
+
+![retrieval_similarity_search](../../assets/rag_similarity_search.png)
 
 **Similarity search** = buscar en el índice los vectores más cercanos al vector de la consulta.
 
@@ -42,9 +47,13 @@ results = collection.query(
 )
 ```
 
+![rag_similarity_search2](../../assets/rag_similarity_search2.webp)
+
 ---
 
 ## 3) Top-K retrieval
+
+![retrieval_top_k](../../assets/retrieval_top_k.webp)
 
 **K** = cuántos chunks devuelves al LLM (o al formateador de contexto).
 
@@ -57,9 +66,11 @@ results = collection.query(
 
 Regla práctica: empieza con K pequeño, **mira los chunks** recuperados y sube K solo si falta información. PAra cambiar la K se puede hacer desde el fichero `config.py` o desde la línea de comandos con `--top-k`.
 
+
+
 ---
 
-## 4) Flujo en `retriever.py`
+## 4) Ejemplo de flujo de retrieval en `retriever.py` en un proyecto RAG
 
 ```text
   pregunta

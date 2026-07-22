@@ -15,13 +15,13 @@
 No necesitas métricas académicas (MRR, nDCG) para empezar. Sí necesitas **rigor manual**:
 
 1. Define 5–10 preguntas representativas.
-2. Ejecuta el [Workout 3](../../../02_Workout/03_Evaluacion_del_retrieval/01_evaluar_y_ajustar_retrieval.ipynb) o tu script / `python main.py --eval` en el proyecto modular.
+2. Ejecuta el script con tu pipeline de RAG.
 3. Para cada pregunta, marca:
    - ¿El chunk #1 es relevante?
    - ¿Algún chunk del top-K contiene la respuesta?
    - ¿La fuente (`metadata.source`) es la esperada?
 
-Ejemplo en `02_Workout/queries/preguntas_eval.json` (y copia equivalente en el proyecto modular).
+Ejemplo sobe dataset de agenda cultural de Madrid:
 
 | id | pregunta | fuente esperada (orientativa) |
 |----|----------|----------------------------|
@@ -68,7 +68,10 @@ Contexto **bueno** para Sprint 10: fragmentos que contienen hechos del corpus, o
 
 ## 5) Preguntas «trampa» útiles
 
+Intentar hacer preguntas que sean difíciles para el sistema para ver si recupera información relevante.
+
 - «¿Cuál es la capital de Francia?» → no está en agenda Madrid; deberías ver chunks irrelevantes (prueba de humildad del sistema).
+- «cine» (una palabra) → demasiado vaga; observa la dispersión de resultados.
 - «cine» (una palabra) → demasiado vaga; observa la dispersión de resultados.
 - Pregunta en inglés sobre dataset en español → prueba límites del embedding multilingüe.
 

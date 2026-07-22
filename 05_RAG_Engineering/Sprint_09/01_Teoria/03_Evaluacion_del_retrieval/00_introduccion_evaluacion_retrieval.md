@@ -28,13 +28,3 @@ Al terminar, deberías poder:
 ```
 
 Si el contexto no contiene la respuesta, ningún prompt salvará el sistema. Evaluar retrieval primero es **más barato** (sin tokens de generación) y **más claro** (ves el texto exacto recuperado).
-
----
-
-## Tabla guía de lectura
-
-| # | Documento | Enfoque |
-|---|-----------|---------|
-| 1 | [Calidad y fallos](./01_evaluar_calidad_y_fallos.md) | Qué mirar en los resultados |
-| 2 | [Ajuste y logging](./02_ajuste_logging_y_depuracion.md) | Cómo mejorar y depurar |
-| 3 | [Comparación](./03_comparacion_de_resultados.md) | Decisión antes de S10 |

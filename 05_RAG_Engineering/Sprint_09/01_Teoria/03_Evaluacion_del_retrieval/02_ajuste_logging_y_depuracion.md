@@ -127,7 +127,7 @@ Lo importante es que **No pases al LLM** hasta agotar esta checklist. Si no se p
 
 ---
 
-## 5) `eval_retrieval.py`
+## 5) Script de evaluación del retrieval (`eval_retrieval.py`)
 
 Dentro de tu proyecto podrías tener un script de evaluación (`preguntas_eval.json`) que ejecute todas las preguntas de `preguntas_eval.json` y opcionalmente varios valores de K.
 

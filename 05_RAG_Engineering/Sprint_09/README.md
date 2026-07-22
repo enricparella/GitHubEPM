@@ -114,6 +114,19 @@ PDF / CSV / MD  →  chunks  →  embeddings  →  ChromaDB  →  similarity sea
 
 ---
 
+## 🧪 Live Review
+
+📁 [`Practica_live_review/`](./Practica_live_review/)
+
+Práctica integradora sobre el corpus **calidad del aire** (continuación del Live Review de Sprint 8): indexar en Chroma, retrieval y evaluación + reflexión. 
+
+| Carpeta | Uso |
+|---------|-----|
+| [`01_retrieval_calidad_aire/`](./Practica_live_review/01_retrieval_calidad_aire/) | Proyecto alumno (stubs S9) |
+| [`01_retrieval_calidad_aire_SOLUTION/`](./Practica_live_review/01_retrieval_calidad_aire_SOLUTION/) | Solución de referencia |
+
+---
+
 ## ⚙️ Convenciones del sprint
 
 - Teoría en `01_Teoria/` (markdown + proyecto ejemplo ejecutable).

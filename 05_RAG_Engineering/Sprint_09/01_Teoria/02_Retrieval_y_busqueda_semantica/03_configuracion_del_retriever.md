@@ -12,7 +12,7 @@
 
 ## 1) Parámetros en `config.py`
 
-Mostramos un ejemplo de configuración del retriever en el fichero `config.py`, que podría ir en tu proyecto:
+Mostramos un ejemplo de configuración del retriever, que podría ir en tu proyecto en el fichero `config.py`:
 
 | Variable | Valor por defecto | Efecto |
 |----------|-------------------|--------|

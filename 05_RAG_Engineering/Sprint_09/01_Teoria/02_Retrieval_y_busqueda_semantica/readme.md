@@ -47,7 +47,7 @@ Salida de este bloque: función `recuperar(pregunta)` que devuelve top-K chunks 
 
 ---
 
-## Workout (vídeo guiado)
+## Workout
 
 | Recurso | Cubre |
 |---------|--------|
