@@ -21,11 +21,11 @@ Al terminar, deberías poder:
 
 ## Retrieval vs generación
 
-| | Sprint 9 | Sprint 10 (este bloque) |
+| | Sprint 9 | Sprint 10 |
 |--|----------|-------------------------|
 | **Qué miras** | Chunks recuperados | Texto de la respuesta |
 | **Pregunta clave** | ¿Llegó la evidencia correcta? | ¿El LLM usó bien esa evidencia? |
-| **Herramienta** | `--eval`, distancias, fuentes | Rúbrica + `--ask` + `preguntas_eval.json` |
+| **Herramienta** | Evaluación automática, análisis de fuentes | Evaluación manual, criterios cualitativos, conjunto de preguntas |
 | **Fallo típico** | Top-K malo, chunking, índice incompleto | Alucinación, ruido, prompt permisivo |
 
 Puedes tener:
@@ -33,22 +33,22 @@ Puedes tener:
 - Retrieval **bueno** + respuesta **mala** (prompt flojo o modelo que inventa).
 - Retrieval **malo** + respuesta «bonita» pero **incorrecta** (alucinación con estilo).
 
-Por eso se evalúan **por separado** y después juntos.
+Por eso se evalúan **por separado** y después juntos. Un retrieval bueno no garantiza una respuesta buena.
 
 ---
 
 ## Dataset de evaluación
 
-En `02_Workout/queries/preguntas_eval.json` (y copia en el proyecto) cada pregunta puede llevar:
+En un archivo de dataset de evaluación, cada pregunta puede incluir campos como:
 
-| Campo | Uso |
-|-------|-----|
-| `fuente_esperada` | Orientativa (igual que S9) |
-| `respuesta_esperada` | Criterio manual de acierto |
-| `deberia_abstenerse` | `true` si no hay evidencia en el corpus |
-| `notas` | Caso pedagógico |
+| Campo                | Uso                                              |
+|----------------------|--------------------------------------------------|
+| `fuente_esperada`    | Fuente esperada de la evidencia                  |
+| `respuesta_esperada` | Respuesta esperada para comprobar la corrección   |
+| `deberia_abstenerse` | Indica si se espera abstención por falta de evidencia (`true`/`false`) |
+| `notas`              | Observaciones o aclaraciones sobre el caso        |
 
-La pregunta q5 («¿Cuál es la capital de Francia?») es el ancla de **abstención**.
+Ejemplo típico: una pregunta sin evidencia en el corpus sirve para comprobar el correcto funcionamiento de la abstención.
 
 ---
 
@@ -60,12 +60,14 @@ Un hábito de ingeniero RAG:
 2. Clasificar cada respuesta (acierto / parcial / fallo / alucinación / abstención).
 3. Decidir **qué capa tocar** (retrieval, prompt, validación, datos).
 
-Lo practicarás en el [workout](../../02_Workout/02_Calidad_robustez_y_evaluacion/01_evaluar_respuestas_rag.ipynb).
-
 ---
 
 ## Resumen
 
 - S9 midió contexto; S10 mide **respuesta**.
 - Un buen chunk no basta si el prompt no obliga a grounding.
-- Siguiente: [Cómo evaluar respuestas RAG](./01_como_evaluar_respuestas_rag.md).
+- Evaluación de retrieval y generación por separado.
+- Un retrieval bueno no garantiza una respuesta buena.
+- Un prompt bueno no garantiza una respuesta buena.
+- Un modelo de LLM bueno no garantiza una respuesta buena.
+- Un dataset de evaluación bien diseñado puede ayudar a mejorar la calidad de nuestros RAGs.

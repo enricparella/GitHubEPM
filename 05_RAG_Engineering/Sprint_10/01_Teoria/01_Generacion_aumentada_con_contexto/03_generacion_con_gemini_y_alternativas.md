@@ -4,7 +4,7 @@
 
 ## Objetivos
 
-- Generar respuestas con **Gemini** (`generate_content`).
+- Generar respuestas con un LLM
 - Entender que el **proveedor del LLM** puede cambiar sin rehacer retrieval.
 - Conocer una **alternativa con Hugging Face** a nivel conceptual.
 
@@ -12,13 +12,11 @@
 
 ## 1) Camino principal: Gemini
 
-Stack del bootcamp (S4–S10):
-
-- Misma API key que embeddings (`GEMINI_API_KEY`).
-- Modelo generativo en `config.py` → `GEMINI_MODEL` (p. ej. `gemini-2.0-flash`).
+- Necesitamos nuestra API key de Gemini (`GEMINI_API_KEY`).
+- Modelo generativo. p. ej. `gemini-2.0-flash`
 - Temperatura baja (`GENERATION_TEMPERATURE ≈ 0.2`) para respuestas más fieles al contexto.
 
-En `generate.py`:
+En el módulo python que se encarga de generar la respuesta con el LLM (por ejemplo `generate.py`), podríamos tener algo como:
 
 ```python
 from google import genai
@@ -34,7 +32,16 @@ def generar_respuesta(prompt: str) -> str:
     return (response.text or "").strip()
 ```
 
-Nota: el modelo de **embedding** (`gemini-embedding-2`) y el de **generación** (`gemini-2.0-flash`) son distintos. No los mezcles en la misma variable de config.
+Nota: el modelo de **embedding** (`gemini-embedding-2`) y el de **generación** (`gemini-2.0-flash`) son distintos. No los mezcles en la misma variable de config. 
+
+Diferencias entre un modelo de Embedding y un modelo de generación LLM:
+
+| Diferencias Clave | Propósito principal | Cómo funcionan | Salida del modelo |
+|------------------|---------------------|----------------|------------------|
+| Embedding        | Convierte palabras o textos en listas de números (vectores) para medir qué tan parecidos son. | Mide la cercanía de los significados en un espacio matemático. | Da una serie de números (un vector). |
+| LLM              | Lee texto, entiende el contexto y genera respuestas nuevas o texto coherente. | Predice y escribe la siguiente palabra o frase basándose en patrones gigantescos. | Da texto completo o una respuesta conversacional. |
+
+El de embedding suele ser un modelo más pequeño y rápido, mientras que el de generación suele ser un modelo más grande y potente.
 
 ---
 
@@ -52,7 +59,7 @@ Lo intercambiable es la **función de generación**, no el retriever ni Chroma. 
 validar → recuperar → formatear → prompt → generar
 ```
 
-Solo cambia la implementación de `generar`.
+Solo cambia la implementación de `generar`. Estamos  **cambiando el LLM**, pero el proceso de recuperación de contexto y el prompt siguen siendo los mismos.
 
 ---
 
@@ -89,24 +96,11 @@ En local, con `transformers` / pipelines de chat, el patrón es el mismo: **mism
 
 ---
 
-## 4) Matriz de decisión (nivel bootcamp)
-
-| Criterio | Gemini | Hugging Face |
-|----------|--------|--------------|
-| Continuidad del módulo | ✅ Mismo stack S4–S10 | Comparación / ampliación |
-| Setup | `GEMINI_API_KEY` | `HF_TOKEN` o pesos locales |
-| Workout principal | Sí | Celda opcional |
-| Producción real | Depende del caso | Depende del modelo y de la infra |
-
-Mensaje pedagógico:
-
-> Lo importante no es el logo del proveedor: es **retrieval + prompt + generación** con un contrato claro (`generar_respuesta(prompt)`).
-
----
-
 ## Resumen
 
-- Gemini es el camino canónico de S10.
+- Hemos visto que podemos usar diferentes LLMs para generar la respuesta final de nuestros RAGs.
+- Lo importante no es el logo del proveedor: es **retrieval + prompt + generación** con un contrato claro (`generar_respuesta(prompt)`).
 - Temperatura baja ayuda al grounding.
-- HF es alternativa de la capa de generación, no un segundo hilo obligatorio.
-- Siguiente: [Pipeline online y modularización](./04_pipeline_online_y_modularizacion.md).
+- HF es alternativa de la capa de generación.
+
+

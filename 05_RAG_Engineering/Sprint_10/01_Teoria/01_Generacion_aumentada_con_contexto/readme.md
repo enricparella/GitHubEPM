@@ -54,16 +54,6 @@ Salida de este bloque: un pipeline online que devuelve **respuesta + fuentes** (
 
 ---
 
-### ⚙️ 4. Pipeline online y modularización
-
-🔗 [Abrir](./04_pipeline_online_y_modularizacion.md)
-
-* `prompts.py`, `generate.py`, `logic.py`
-* CLI `--ask`
-* Orquestación sin mezclar responsabilidades
-
----
-
 ## Workout (vídeo guiado)
 
 | Recurso | Cubre |

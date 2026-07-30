@@ -21,6 +21,8 @@ Con el mismo top-K, dos prompts distintos producen sistemas muy diferentes:
 
 El retrieval decide **qué lee** el modelo. El prompt decide **cómo lo usa**.
 
+![Prompt RAG](../../assets/context_promt_rag.webp)
+
 ---
 
 ## 2) Estructura recomendada
@@ -66,21 +68,25 @@ El `contexto` viene de `formatear_contexto(chunks)` — el mismo formateo que ya
 
 ---
 
-## 3) Separar bien las piezas
+## 3) Separar claramente las partes del prompt
 
-| Pieza | Quién la controla | Debe cambiar por consulta? |
-|-------|-------------------|----------------------------|
-| Instrucciones | Tú (`prompts.py`) | No (salvo experimentos) |
-| Contexto | Retriever + `context.py` | Sí |
-| Pregunta | Usuario | Sí |
+| Componente   | Quién lo define                  | ¿Debe cambiar en cada consulta?         |
+|--------------|----------------------------------|-----------------------------------------|
+| Instrucciones| Quien diseña el sistema/prompt   | No (salvo experimentación o ajustes)    |
+| Contexto     | Mecanismo de recuperación de info | Sí                                     |
+| Pregunta     | Usuario final                    | Sí                                     |
 
-Error frecuente: mezclar instrucciones **dentro** del bloque de contexto. El modelo puede confundir evidencia con órdenes.
+Un error común es mezclar instrucciones **dentro** del bloque de contexto, lo que puede llevar al modelo a confundir directivas con evidencia.
 
-Otro error: no delimitar fragmentos. Si pegas texto suelto, es más difícil saber qué chunk usó y depurar.
+Otro error es no delimitar claramente los fragmentos del contexto. Si se añade texto sin separar fuentes o partes, se dificulta identificar qué información concreta se utilizó y el proceso de análisis resulta menos transparente y más difícil de depurar.
 
 ---
 
 ## 4) Grounding y abstención
+
+Grounding es el proceso de asegurar que el modelo solo use la información del contexto para generar la respuesta.
+
+Abstención es el proceso de no generar una respuesta cuando no hay suficiente información en el contexto.
 
 Reglas útiles en las instrucciones:
 
@@ -98,7 +104,7 @@ Con un buen prompt, el sistema debería **abstenerse** aunque el modelo «sepa»
 
 ## 5) Texto libre vs JSON
 
-A veces conviene pedir **salida estructurada** (continuidad Sprint 5):
+A veces conviene pedir **salida estructurada** (como vimos en el Sprint 5):
 
 ```json
 {
@@ -108,15 +114,13 @@ A veces conviene pedir **salida estructurada** (continuidad Sprint 5):
 }
 ```
 
-Misma evidencia (contexto), distinto formato. El programa puede hacer `json.loads` y ramificar (`hay_evidencia == false` → mostrar abstención en la UI).
+Con la misma información recuperada (contexto), puedes optar por diferentes formatos de salida. El programa puede analizar la respuesta estructurada (por ejemplo, usando `json.loads`) y tomar decisiones según los campos devueltos (por ejemplo, si `hay_evidencia` es falso, mostrar un mensaje de abstención en la interfaz).
 
 Reglas útiles en el prompt:
 
 - Responde **solo** con JSON válido (sin markdown alrededor, si puedes).
 - Define el esquema de campos.
 - Si no hay evidencia, `hay_evidencia: false`.
-
-En el workout practicas texto libre **y** una variante JSON.
 
 ---
 
@@ -139,4 +143,3 @@ En el workout practicas texto libre **y** una variante JSON.
 - El prompt controla el **grounding**; el retriever controla la **evidencia**.
 - Abstenerse es a veces la respuesta correcta.
 - Texto libre o JSON: elige según si un programa debe **consumir** la salida.
-- Siguiente: [Generación con Gemini y alternativas](./03_generacion_con_gemini_y_alternativas.md).

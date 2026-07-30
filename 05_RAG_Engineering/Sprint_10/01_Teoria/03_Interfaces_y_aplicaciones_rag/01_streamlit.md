@@ -10,6 +10,8 @@
 - Capturar una entrada, llamar a una función Python y mostrar el resultado.
 - Lanzar la app en local con `streamlit run`.
 
+![Streamlit](../../assets/streamilt.svg)
+
 ---
 
 ## 1) Frontend clásico vs MVP en Python

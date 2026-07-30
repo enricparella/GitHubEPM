@@ -52,11 +52,13 @@ Caso de uso del sprint: app **Streamlit** sobre el pipeline RAG (`responder(preg
 
 ---
 
-### 4. Otras opciones de interfaz
+### 4. Opciones de mercado: web, móvil y APIs
 
 🔗 [Abrir](./04_otras_opciones_de_interfaz.md)
 
-* Gradio, FastAPI + cliente (panorama)
+* Interfaces web (Streamlit, Gradio, React, Vue…)
+* Apps móviles (nativo, Flutter, React Native…)
+* APIs (FastAPI, Flask, DRF, Express…)
 * Por qué Streamlit en el bootcamp
 
 ---
