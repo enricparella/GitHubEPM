@@ -41,7 +41,7 @@ LLM (Gemini)
 Respuesta (+ fuentes)
 ```
 
-En código, ese flujo se encapsula en una sola función:
+En código, ese flujo se encapsula en una sola función. Ejemplo de la llamada a la función principal de tu RAG.
 
 ```python
 resultado = responder("¿Hay cine gratuito en verano?")
@@ -51,7 +51,7 @@ resultado = responder("¿Hay cine gratuito en verano?")
 # resultado["error"]      → None o mensaje
 ```
 
-`main.py --ask` y Streamlit (`app.py`) **solo** llaman a `responder()`. No reimplementan retrieval ni generación.
+La interfaz de usuario o cualquier módulo de entrada deben simplemente llamar a la función principal encargada de responder; no deben reimplementar la lógica de recuperación o generación.
 
 ---
 
@@ -74,7 +74,9 @@ build_chat_prompt()            build_rag_prompt()
 Gemini                         Gemini
 ```
 
-La diferencia no es el LLM final: es **cómo eliges el contexto**. Keywords + FAQ fija → **recuperación semántica** sobre muchos chunks.
+La diferencia no es el LLM final: es **cómo eliges el contexto**. Keywords + FAQ fija → **recuperación semántica** sobre muchos chunks. En este caso, el contexto es el resultado de la recuperación semántica sobre muchos chunks.
+
+![Pipeline RAG](../../assets/context_promt_rag2.jpg)
 
 ---
 
@@ -82,10 +84,10 @@ La diferencia no es el LLM final: es **cómo eliges el contexto**. Keywords + FA
 
 | Anti-patrón | Problema |
 |-------------|----------|
-| Mezclar `collection.query()` y `generate_content` en un solo script sin módulos | Difícil depurar y reutilizar |
-| Pasar al LLM los chunks sin instrucciones de grounding | Alucinaciones y respuestas fuera de corpus |
-| Ignorar `metadata.source` | No puedes citar fuentes ni depurar |
-| Reescribir el pipeline dentro de Streamlit | Duplicas lógica; la UI se vuelve frágil |
+| Mezclar las etapas de recuperación y generación en un solo bloque sin modularidad | Dificulta la depuración y la reutilización |
+| Usar el contexto sin instrucciones claras | Riesgo de respuestas poco fundamentadas o alucinaciones |
+| Ignorar las fuentes o referencias en los metadatos | No se puede rastrear la procedencia de la información |
+| Incrustar toda la lógica del pipeline directamente en la interfaz | Duplica lógica y dificulta el mantenimiento |
 
 ---
 
@@ -94,4 +96,5 @@ La diferencia no es el LLM final: es **cómo eliges el contexto**. Keywords + FA
 - El retrieval selecciona evidencia; la generación **redacta**.
 - El contrato del backend es `responder(pregunta)`.
 - Misma idea que S5, con contexto recuperado automáticamente.
-- Siguiente: [Prompt con contexto recuperado](./02_prompt_con_contexto_recuperado.md).
+- Es importante modularizar el pipeline de RAG para facilitar la depuración y la reutilización.
+- Es importante que la interfaz de usuario o cualquier módulo de entrada simplemente llame a la función principal encargada de responder; no reimplementen la lógica de recuperación o generación.

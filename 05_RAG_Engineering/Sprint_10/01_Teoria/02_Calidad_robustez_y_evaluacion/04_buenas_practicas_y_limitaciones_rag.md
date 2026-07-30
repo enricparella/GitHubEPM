@@ -4,9 +4,8 @@
 
 ## Objetivos
 
-- Resumir buenas prácticas de sistemas RAG (nivel bootcamp).
+- Enumerar buenas prácticas para trabajar en un proyecto RAG.
 - Enumerar limitaciones reales: corpus, chunking, top-K, modelo, latencia.
-- Dejar claro qué se mejora en la UI (Bloque 3) y qué llegará con agentes (Sprint 11+).
 
 ---
 
@@ -24,7 +23,7 @@
 
 ---
 
-## 2) Limitaciones (hay que conocerlas)
+## 2) Limitaciones a tener en cuenta
 
 | Limitación | Ejemplo |
 |------------|---------|
@@ -44,33 +43,15 @@ Un RAG **no** sustituye:
 
 ---
 
-## 3) Checklist pre-demo
+## 3) Checklist para sistemas RAG
 
-Antes de enseñar el sistema:
+Antes de desplegar un sistema de recuperación aumentada por generación, revisa:
 
-- [ ] Corpus en `data/` e índice construido (`--prepare --index`)
-- [ ] `--ask` funciona en 2–3 preguntas «fáciles»
-- [ ] q5 (fuera de corpus) **abstiene** o falla de forma controlada
-- [ ] Fuentes visibles en consola o UI
-- [ ] Sabes explicar un fallo conocido (p. ej. K bajo)
-
----
-
-## 4) Puente al Bloque 3 y a Sprint 11
-
-Hasta ahora el sistema vive en **consola**. El Bloque 3 añade **Streamlit** sin rehacer el backend: misma `responder(pregunta)`.
-
-Más adelante (agentes):
-
-```text
-Ahora (S10)              Después (S11+)
-───────────              ──────────────
-Streamlit                Streamlit
-   ↓                        ↓
-RAG directo              Agente → tools → RAG
-```
-
-La interfaz puede mantenerse; cambia la **inteligencia** del backend.
+- [ ] El corpus y el índice están correctamente construidos y accesibles
+- [ ] El sistema responde adecuadamente a preguntas típicas y sencillas
+- [ ] Puede manejar preguntas fuera del dominio previsto mediante abstención o errores controlados
+- [ ] Las fuentes utilizadas en la respuesta son visibles y comprobables
+- [ ] Conoces las causas y posibles soluciones para los fallos más frecuentes
 
 ---
 
@@ -78,5 +59,4 @@ La interfaz puede mantenerse; cambia la **inteligencia** del backend.
 
 - Buenas prácticas = evaluar por capas, grounding, validar, citar.
 - Las limitaciones son del corpus, del chunking, del K y del modelo — no «magia del LLM».
-- Workout: [01_evaluar_respuestas_rag.ipynb](../../02_Workout/02_Calidad_robustez_y_evaluacion/01_evaluar_respuestas_rag.ipynb).
-- Siguiente bloque: [Interfaces y aplicaciones](../03_Interfaces_y_aplicaciones_rag/readme.md).
+- Es importante tener en cuenta las limitaciones de un sistema RAG para garantizar que el sistema se comporte de forma ética y responsable.

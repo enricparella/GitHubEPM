@@ -18,6 +18,8 @@ Al terminar, deberías poder:
 - Generar una respuesta con Gemini a partir del contexto de `context.py`.
 - Entender que el proveedor del LLM puede cambiar (p. ej. Hugging Face) sin rehacer el retriever.
 
+![Pipeline RAG](../../assets/rag3.gif)
+
 ---
 
 ## Puente desde Sprint 9
@@ -56,7 +58,7 @@ En Sprint 8–9 viste los pasos 1–5. Aquí cierras el ciclo:
   7. Generación de la respuesta   ← este bloque
 ```
 
-Sin el paso 6–7 tienes un **motor de búsqueda semántica**. Con ellos tienes un **RAG**.
+Sin el paso 6–7 tienes un **motor de búsqueda semántica**. Con ellos tienes un pipeline completo de **RAG**. En los últimos sprints hemos ido viendo por piezas cada paso de este pipeline.
 
 ---
 
@@ -68,7 +70,6 @@ Un pipeline online que, dada una pregunta, devuelve:
 - **fuentes** (archivos de los chunks usados),
 - el **contexto** recuperado (para depurar).
 
-Lo practicarás en el [workout](../../02_Workout/01_Generacion_aumentada_con_contexto/01_del_retrieval_a_la_respuesta_rag.ipynb) y en el proyecto modular (`python main.py --ask "…"`).
 
 ---
 
@@ -77,4 +78,3 @@ Lo practicarás en el [workout](../../02_Workout/01_Generacion_aumentada_con_con
 - S9 recupera contexto; S10 **genera** con ese contexto.
 - RAG = retrieval + generación, no solo uno de los dos.
 - Reutilizas `context.py`; añades prompt + LLM.
-- Siguiente: [Del retrieval a la respuesta](./01_del_retrieval_a_la_respuesta.md).

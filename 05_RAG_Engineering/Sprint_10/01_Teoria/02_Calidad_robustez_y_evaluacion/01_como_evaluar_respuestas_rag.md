@@ -4,9 +4,9 @@
 
 ## Objetivos
 
-- Definir criterios prácticos para juzgar respuestas.
-- Usar `preguntas_eval.json` con campos de generación.
-- Documentar resultados sin automatizar demasiado al inicio.
+- Definir criterios prácticos para evaluar respuestas generadas por un sistema.
+- Utilizar un conjunto de preguntas de prueba con campos relevantes para la evaluación (ejemplo: evaluar_respuestas.json)
+- Registrar y analizar los resultados de forma manual en una primera etapa, sin depender de herramientas totalmente automatizadas.
 
 ---
 
@@ -22,11 +22,13 @@
 
 Un JSON **válido** no implica respuesta correcta: puede parsear y aun así alucinar. Evalúa formato y contenido por separado.
 
-No necesitas LLM-as-judge ni métricas académicas para empezar. Sí necesitas **rigor manual** con un set fijo de preguntas.
+No necesitas LLM-as-judge ni métricas académicas para empezar. Sí necesitas **rigor manual** con un set fijo de preguntas. 
+
+Es importante observar el comportamiento del sistema con un conjunto de preguntas fijo y no depender de herramientas totalmente automatizadas.
 
 ---
 
-## 2) Rúbrica orientativa
+## 2) Ejemplo de rúbrica orientativa para evaluar respuestas RAG
 
 Para cada pregunta, marca un veredicto:
 
@@ -52,8 +54,8 @@ Ejemplo con el JSON del sprint:
 
 ## 3) Procedimiento recomendado
 
-1. Indexa el corpus (`--prepare --index`) con el mismo `MAX_CHUNKS_EMBED` / config que uses en demo.
-2. Para cada pregunta: `python main.py --ask "…"` (o el notebook).
+1. Indexa el corpus con el mismo `MAX_CHUNKS_EMBED` / config que uses en demo.
+2. Para cada pregunta: ejecuta el proceso de evaluación con la herramienta o script que utilices (puede ser desde línea de comandos, un notebook, o la interfaz seleccionada). Ejemplo: `python main.py --ask "…"` (o el notebook).
 3. Anota: veredicto, fuentes mostradas, si el contexto recuperado era bueno.
 4. Si falla, **separa capas**:
    - ¿El contexto ya era malo? → vuelve a S9 (K, chunking, índice).
@@ -61,7 +63,9 @@ Ejemplo con el JSON del sprint:
 
 ---
 
-## 4) Tabla de resultados (plantilla)
+## 4) Ejemplo de Tabla de resultados (plantilla)
+
+- q1, q2.... son las preguntas del dataset de evaluación.
 
 | id | Veredicto | ¿Contexto OK? | ¿Fuentes OK? | Acción |
 |----|-----------|---------------|--------------|--------|
@@ -78,4 +82,3 @@ Guarda esta tabla en tus notas o en el notebook: es tu **baseline** antes de toc
 - Criterios: exactitud, relevancia, coherencia, trazabilidad.
 - Rúbrica manual + set fijo de preguntas.
 - Separa fallos de retrieval y fallos de generación.
-- Siguiente: [Alucinaciones y grounding](./02_hallucinations_y_grounding.md).
